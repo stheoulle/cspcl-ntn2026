@@ -1,0 +1,671 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+% ============================== SETUP ==============================
+\usepackage{fontspec}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\newfontfamily\monofont{Noto Sans Mono}
+\usepackage{polyglossia}
+\setdefaultlanguage{french}
+
+\usetheme[progressbar=frametitle,numbering=counter,background=light]{metropolis}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frame numbering}[counter]
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{pgfpages}
+\graphicspath{{slides_assets/}}
+
+% ---- toggle: false = presentation only, true = adds speaker-note pages
+\newif\ifshownotes
+\shownotesfalse
+\ifshownotes
+  \setbeameroption{show notes on second screen=right}
+\fi
+
+% ============================== PALETTE (light) ==============================
+\definecolor{bg}{HTML}{F7F9FC}
+\definecolor{bgpanel}{HTML}{EFF3F9}
+\definecolor{bgpanel2}{HTML}{E7ECF3}
+\definecolor{line}{HTML}{8C9AB0}
+\definecolor{linesoft}{HTML}{B4C0D1}
+\definecolor{ink}{HTML}{16202E}
+\definecolor{inkdim}{HTML}{435166}
+\definecolor{inkfaint}{HTML}{7C8CA3}
+\definecolor{accent}{HTML}{B8710F}
+\definecolor{accenttwo}{HTML}{0E7D6F}
+\definecolor{warning}{HTML}{C2464E}
+\definecolor{accentinkon}{HTML}{FFF6E9}
+\definecolor{accenttwoinkon}{HTML}{EAFBF6}
+
+\setbeamercolor{background canvas}{bg=bg}
+\setbeamercolor{normal text}{fg=ink,bg=bg}
+\setbeamercolor{frametitle}{fg=ink,bg=bg}
+\setbeamercolor{framesubtitle}{fg=inkdim}
+\setbeamercolor{progress bar}{fg=accent,bg=linesoft}
+\setbeamercolor{title separator}{fg=accent}
+\setbeamercolor{alerted text}{fg=warning}
+\setbeamercolor{example text}{fg=accenttwo}
+\setbeamercolor{page number in head/foot}{fg=inkdim}
+\setbeamerfont{page number in head/foot}{family=\monofont,size=\small,series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{framesubtitle}{family=\monofont,size=\scriptsize}
+\setbeamertemplate{frametitle continuation}{}
+
+\setbeamertemplate{itemize item}{\textcolor{accenttwo}{\scriptsize$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\textcolor{inkdim}{\tiny$-$}}
+\setlength{\parskip}{4pt}
+
+% ============================== MACROS ==============================
+\newcommand{\muD}{\ensuremath{\mu}D3TN}
+\newcommand{\eyebrow}[1]{\textcolor{inkdim}{\small\monofont \MakeUppercase{#1}}}
+
+\newtcbox{\chip}[1][]{on line, arc=9pt, colframe=line, colback=bgpanel2,
+  boxrule=0.8pt, top=4pt, bottom=4pt, left=10pt, right=10pt,
+  fontupper=\monofont\normalsize, before upper={\color{ink}}, #1}
+\newtcbox{\chipstrong}[1][]{on line, arc=9pt, colframe=accent, colback=bgpanel2,
+  boxrule=1pt, top=4pt, bottom=4pt, left=10pt, right=10pt,
+  fontupper=\monofont\normalsize\bfseries, before upper={\color{ink}}, #1}
+\newtcbox{\milestone}[1][]{on line, arc=10pt, colframe=accenttwo, colback=accenttwo,
+  boxrule=0pt, top=5pt, bottom=5pt, left=14pt, right=14pt,
+  fontupper=\monofont\normalsize\bfseries, before upper={\color{accenttwoinkon}}, #1}
+
+% \bigfig maximizes a tikzpicture to fill the space freed by removing
+% titles/prose: it scales up to whichever of width/height is tighter.
+\newcommand{\bigfig}[2][0.82\textheight]{\begin{center}\adjustbox{max width=\linewidth,max height=#1}{#2}\end{center}}
+
+% \photo frames a real photo consistently with the vector panels: a thin
+% rule border, scaled to fit within the given width/height box.
+\newcommand{\photo}[3]{\adjustbox{cfbox=line 1.4pt 0pt,max width=#1,max height=#2}{\includegraphics{#3}}}
+
+\newcommand{\led}[1]{\tikz[baseline=-0.6ex]{\filldraw[#1,draw=#1] (0,0) circle (2.1pt);}}
+
+% simple padlock glyph, centered at (x,y), in the given color
+\newcommand{\lockicon}[3]{%
+  \draw[#3,fill=#3,rounded corners=2pt] (#1-0.32,#2-0.30) rectangle (#1+0.32,#2+0.22);
+  \draw[#3,line width=2.4pt] (#1-0.2,#2+0.22) arc (180:0:0.2);
+}
+
+\newtcolorbox{cardbox}{colback=bgpanel2, colframe=line, boxrule=0.6pt,
+  arc=6pt, left=14pt, right=14pt, top=7pt, bottom=7pt, coltext=ink}
+
+\tikzset{
+  panel/.style={draw=line, line width=1pt, fill=bgpanel, rounded corners=3pt},
+  panel2/.style={draw=line, line width=1pt, fill=bgpanel2, rounded corners=3pt},
+  accentbox/.style={draw=accent, fill=accent, rounded corners=3pt},
+  accenttwobox/.style={draw=accenttwo, fill=accenttwo, rounded corners=3pt},
+  warnbox/.style={draw=warning, line width=1.1pt, fill=bgpanel2, rounded corners=3pt},
+  arrline/.style={-{Latex[length=2.8mm,width=2mm]}, line width=1.3pt, draw=inkdim},
+  accline/.style={-{Latex[length=2.4mm,width=1.7mm]}, line width=1.3pt, draw=accenttwo},
+  dimline/.style={line width=0.9pt, draw=inkdim, dash pattern=on 3pt off 3pt},
+  lbl/.style={font=\monofont\normalsize, text=inkdim},
+  lblf/.style={font=\monofont\normalsize, text=inkdim},
+  lbli/.style={font=\monofont\normalsize, text=ink},
+  lbld/.style={font=\bfseries\sffamily\Large, text=ink},
+}
+
+\title{CSPCL}
+\author{Mathias Durat}
+\date{STINT 2026}
+\hypersetup{pdftitle={CSPCL --- STINT 2026 (FR)},pdfauthor={Mathias Durat, Sarah Theoulle, Hugo Ponthieu, Tristan-Mihai Radulescu, Olivier De Jonck\`ere}}
+
+\begin{document}
+
+% ============================== SLIDE 1 — TITLE ==============================
+\begin{frame}[plain]
+\vspace{2pt}
+
+\eyebrow{NTN Days 2026 - Paris, France}\\[16pt]
+{\fontsize{54}{54}\selectfont\bfseries\color{ink} CSPCL}\\[10pt]
+{\Large\color{ink} Transition progressive pour l'adoption des DTN\\ pour les opérateurs de CubeSats.}\\[22pt]
+
+\chip{Sarah Theoulle} \chip{Olivier De Jonck\`ere}
+
+\vspace{7pt}
+
+\vspace{8pt}
+\chip{LIRMM $\cdot$ CSUM}
+
+\vfill
+\begin{tikzpicture}[baseline=0pt]
+  \foreach \x/\w in {0.4/2.2,2.9/1.4,4.6/2.8,7.7/0.9,8.9/1.9,11.1/1.1,12.5/2.3}
+    \fill[accenttwo] (\x,0) rectangle ++(\w,0.22);
+  \fill[accent] (9.9,0) rectangle ++(0.55,0.22);
+  \draw[inkdim,line width=0.5pt] (0,-0.14) -- (15.2,-0.14);
+\end{tikzpicture}
+
+\note{Bonjour. Je vais vous présenter CSPCL --- une façon d'apporter les réseaux tolérants aux délais aux CubeSats qui utilisent déjà le CubeSat Space Protocol, sans toucher à ce qui fonctionne déjà. C'est un travail commun avec Sarah Theoulle, Hugo Ponthieu, Tristan-Mihai Radulescu et Olivier De Jonck\`ere, du LIRMM et de Polytech Montpellier, mené autour des futures missions CubeSat du Centre Spatial de l'Universit\'e de Montpellier.}
+\end{frame}
+
+% ============================== SLIDE 2 — MEET CSUM ==============================
+\begin{frame}{Le CSUM}
+
+\vfill
+\centering
+\begin{columns}[c]
+\begin{column}{0.4\textwidth}\centering
+\photo{\linewidth}{0.55\textheight}{csum_map.png}
+\end{column}
+\begin{column}{0.56\textwidth}\centering
+\photo{\linewidth}{0.55\textheight}{csum_building.png}
+\end{column}
+\end{columns}
+
+\vspace{16pt}
+\chip{Montpellier, France} 
+\vfill
+
+\note{Ce travail existe grâce à un vrai client : le CSUM, le Centre Spatial de l'Universit\'e de Montpellier, basé ici à Montpellier. Il prépare une future mission CubeSat 12U et, comme la plupart des équipes CubeSat universitaires, il fonctionne avec une petite équipe et un petit budget --- rien à voir avec les effectifs d'une agence spatiale nationale.}
+\end{frame}
+
+% ============================== SLIDE 3 — CONTROL ROOM ==============================
+\begin{frame}{La salle de contrôle}
+
+\vfill
+\centering
+\photo{0.82\linewidth}{0.66\textheight}{control_room.png}
+
+\vspace{16pt}
+\vfill
+
+\note{Voici la salle de contrôle du CSUM aujourd'hui. De vraies opérations, menées à la main, par une petite équipe, sur une pile qu'elle connaît par cœur. Ce n'est pas glamour, mais c'est de la production, et c'est leur expertise accumulée. On ne remplace pas ça en un jour, et on n'obtient pas la permission d'essayer. C'est la réalité que toute transition vers le DTN doit respecter.}
+\end{frame}
+
+% ============================== SLIDE 4 — THE PROBLEM ==============================
+\begin{frame}{Le problème}
+
+\vfill
+\centering{\Huge\color{ink}\bfseries Comment introduire les DTN sans être intrusif ?}
+\vfill
+
+\note{Voici donc la vraie question à laquelle répond cet exposé : comment apporter les réseaux tolérants aux délais à une flotte comme celle du CSUM, sans toucher à la pile qui vole déjà ?}
+\end{frame}
+
+% ============================== SLIDE 5 — CSP REALITY ==============================
+\begin{frame}{CSP sur CAN}
+
+\vfill
+\bigfig[0.6\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,4.6) rectangle (4.3,6.0); \node[lbli] at (2.15,5.3) {APPLICATION};
+\draw[panel,line width=1.4pt] (0,2.9) rectangle (4.3,4.3); \node[lbli] at (2.15,3.6) {CSP};
+\draw[panel,line width=1.4pt] (0,1.2) rectangle (4.3,2.6); \node[lbli] at (2.15,1.9) {BUS CAN};
+\draw[accent,line width=2.2pt,rotate around={-13:(5.5,0.75)}] (5.5,0.75) circle (1.05);
+\draw[accent,line width=1.3pt,rotate around={-13:(5.5,0.75)}] (5.5,0.75) circle (0.85);
+\node[font=\monofont\small\bfseries,text=accent,rotate=-13] at (5.5,0.93) {ÉPROUVÉ};
+\node[font=\monofont\small\bfseries,text=accent,rotate=-13] at (5.5,0.58) {EN VOL};
+\end{tikzpicture}}
+
+\vspace{16pt}
+\centering{\Large\color{accent}\bfseries «~It just works.~»}
+\vfill
+
+\note{Les opérateurs de CubeSats comme le CSUM ont déjà une pile qui fonctionne. Leur logiciel de bord utilise le CubeSat Space Protocol, CSP, directement sur un bus CAN --- la partie filaire, embarquée, de l'architecture. Cette pile a fait ses preuves en vol, et elle marche, tout simplement. Mais cette phrase est à double tranchant : une transition vers le DTN a un vrai coût, en temps d'ingénierie et en risque, et un petit acteur n'a pas forcément les moyens de le payer.}
+\end{frame}
+
+% ============================== SLIDE 6 — TWIST, PART 1 ==============================
+\begin{frame}{Premier problème}
+
+\vfill
+\bigfig[0.56\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,3.2) rectangle (4.3,4.6); \node[lbli] at (2.15,3.9) {APPLICATION};
+\lockicon{2.15}{2.6}{accent}
+\node[lbl,text=accent] at (5.6,2.6) {AU-DESSUS};
+\draw[panel,line width=1.4pt] (0,1.0) rectangle (4.3,2.4); \node[lbli] at (2.15,1.7) {CSP};
+\end{tikzpicture}}
+
+\vspace{10pt}
+\centering{\Large\color{ink}\bfseries CSP doit rester au-dessus}
+\vfill
+
+\note{Voici la contrainte qui rend ce projet intéressant. Quoi que l'on construise, la couche application doit continuer à parler du CSP pur. Ces applications volent déjà, sont déjà qualifiées, et personne ne va les réécrire pour ça.}
+\end{frame}
+
+% ============================== SLIDE 7 — TWIST, PART 2 ==============================
+\begin{frame}{Second problème}
+
+\vfill
+\bigfig[0.62\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,4.9) rectangle (4.3,6.3); \node[lbli] at (2.15,5.6) {APPLICATION};
+\lockicon{2.15}{4.55}{accent}
+\node[lbl,text=accent] at (5.6,4.55) {AU-DESSUS};
+\draw[panel,line width=1.4pt] (0,2.7) rectangle (4.3,4.1); \node[lbli] at (2.15,3.4) {CSP};
+\lockicon{2.15}{2.35}{accent}
+\node[lbl,text=accent] at (5.6,2.35) {EN DESSOUS};
+\draw[panel,line width=1.4pt] (0,0.5) rectangle (4.3,1.9); \node[lbli] at (2.15,1.2) {BUS CAN};
+\end{tikzpicture}}
+
+\vspace{10pt}
+\centering{\Large\color{ink}\bfseries CSP doit rester, au-dessus et en dessous}
+\vfill
+
+\note{Et il n'y a pas que la couche application. Le bus CAN en dessous est le transport physique éprouvé en vol --- on ne peut pas le remplacer non plus. CSP est donc bloqué des deux côtés : au-dessus, au niveau de l'application, et en dessous, au niveau du transport. Ce qui transporte le DTN doit tenir dans ce sandwich.}
+\end{frame}
+
+% ============================== SLIDE 8 — CLIFFHANGER: NO PATH TODAY ==============================
+\begin{frame}{Le chaînon manquant}
+
+\vfill
+\bigfig{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,1.3) circle (0.75); \node[lbl] at (0,1.3) {nœud};
+\draw[panel,line width=1.4pt] (1.8,2.5) circle (0.6); \draw[panel,line width=1.4pt] (2.0,0.3) circle (0.65); \draw[panel,line width=1.4pt] (-1.6,0.6) circle (0.5);
+\draw[accline] (0.7,1.55) -- (1.25,2.25);
+\draw[accline] (0.65,1.05) -- (1.5,0.5);
+\draw[accline] (-0.7,1.15) -- (-1.15,0.75);
+\node[lbl] at (0.3,-0.75) {réseau DTN};
+
+\draw[dimline] (3.6,1.3) -- (4.6,1.3);
+\draw[dimline] (5.6,1.3) -- (6.6,1.3);
+\node[font=\monofont\LARGE,text=warning] at (5.1,1.6) {$\times$};
+\node[lbl,text=warning] at (5.1,0.8) {aucun chemin};
+
+\draw[panel,line width=1.4pt] (7,0.85) rectangle (10.6,1.9);
+\node[lbli] at (8.8,1.375) {APPLI CSP SEULE};
+\end{tikzpicture}}
+\vfill
+
+\note{Et voici le piège. Si on pose le DTN par-dessus CSP, c'est très bien pour les nouvelles applications écrites pour parler BP. Mais toutes les applications qui tournent déjà directement sur CSP ignorent l'existence de BP, au-dessus comme en dessous. La vraie question de recherche est donc : comment apporter le DTN à une flotte basée sur CSP, des deux côtés de ce sandwich, sans perturber ce qui vole déjà ?}
+\end{frame}
+
+% ============================== SLIDE 11 — REVEAL: THE CSP-BP SANDWICH ==============================
+\begin{frame}{La solution}
+
+\vfill
+\bigfig[0.4\textheight]{\begin{tikzpicture}
+\draw[accent,fill=accent,rounded corners=14pt] (0,4.4) rectangle (6,5.6); \node[font=\monofont\Large\bfseries,text=accentinkon] at (3,5.0) {CSP};
+\draw[accenttwo,fill=accenttwo,rounded corners=4pt] (0,3.15) rectangle (6,4.25); \node[font=\monofont\Large\bfseries,text=accenttwoinkon] at (3,3.7) {BP};
+\draw[accent,fill=accent,rounded corners=14pt] (0,1.9) rectangle (6,3.1); \node[font=\monofont\Large\bfseries,text=accentinkon] at (3,2.5) {CSP};
+\fill[bg] (6,5.6) circle (0.55);
+\fill[bg] (6,1.9) circle (0.4);
+\end{tikzpicture}}
+
+\vspace{10pt}
+\centering{\Large\color{ink}\bfseries Le sandwich CSP-BP.}
+
+\vspace{18pt}
+\centering{\small\color{inkdim} Les agences spatiales convergent déjà vers BP}\\[8pt]
+\chip{IOAG} \chip{NASA LCRNS} \chip{ESA Moonlight} \chip{NASA--ESA LunaNet}
+\vfill
+
+\note{Notre réponse : prendre Bundle Protocol en sandwich entre deux couches de CSP. CSP reste en haut, et parle aux applications historiques sans les modifier. CSP reste en bas, sur le même bus CAN. Et BP tourne au milieu, pour acheminer les bundles d'une couche CSP à l'autre. Nous ciblons Bundle Protocol parce que c'est vers lui que converge déjà la communauté spatiale : l'IOAG pour les actifs martiens, LCRNS à la NASA, Moonlight à l'ESA et LunaNet NASA-ESA reposent tous dessus.}
+\end{frame}
+
+% ============================== SLIDE 12 — CHARON: WHAT ==============================
+\begin{frame}{Charon}
+
+\vfill
+\bigfig[0.42\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,1.2) rectangle (2.6,2.2); \node[lbli] at (1.3,1.7) {appli CSP};
+\draw[arrline] (2.6,1.7) -- (3.3,1.7);
+\draw[accenttwobox] (3.3,1.05) rectangle (6.3,2.35); \node[font=\monofont\Large,text=accenttwoinkon] at (4.8,1.7) {Charon};
+\draw[arrline] (6.3,1.7) -- (7.0,1.7);
+\draw[panel,line width=1.4pt] (7.0,1.2) rectangle (9.6,2.2); \node[lbli] at (8.3,1.7) {BPA};
+\end{tikzpicture}}
+
+\vspace{16pt}
+\centering{\Large\color{ink}\bfseries Un tunnel : CSP, sur Bundle Protocol.}
+\vfill
+
+\note{Charon est notre réponse pour la couche application. C'est un proxy léger, placé à côté d'une application CSP, qui fait passer son trafic par un tunnel sur Bundle Protocol, si bien que l'application elle-même n'a jamais besoin de parler BP.}
+\end{frame}
+
+% ============================== SLIDE 13 — CHARON: WHY ==============================
+\begin{frame}{Pourquoi Charon}
+
+\vfill
+\begin{columns}[c]
+\begin{column}{0.46\textwidth}\centering
+\bigfig[0.4\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,1.2) rectangle (2.6,2.2); \node[lbli] at (1.3,1.7) {appli CSP};
+\draw[arrline] (2.6,1.7) -- (4.9,1.7);
+\node[font=\monofont\LARGE,text=warning] at (3.75,2.15) {$\times$};
+\draw[panel,line width=1.4pt] (4.9,1.2) rectangle (7.5,2.2); \node[lbli] at (6.2,1.7) {BPA};
+\end{tikzpicture}}
+
+\vspace{6pt}
+{\small\color{warning} réécrite, ou pas de DTN}
+\end{column}
+\begin{column}{0.46\textwidth}\centering
+\bigfig[0.4\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,1.2) rectangle (2.2,2.2); \node[lbli] at (1.1,1.7) {appli CSP};
+\draw[arrline] (2.2,1.7) -- (2.75,1.7);
+\draw[accenttwobox] (2.75,1.05) rectangle (5.15,2.35); \node[font=\monofont\normalsize,text=accenttwoinkon] at (3.95,1.7) {Charon};
+\draw[arrline] (5.15,1.7) -- (5.7,1.7);
+\draw[panel,line width=1.4pt] (5.7,1.2) rectangle (7.9,2.2); \node[lbli] at (6.8,1.7) {BPA};
+\end{tikzpicture}}
+
+\vspace{6pt}
+{\small\color{accenttwo} inchangée, et DTN}
+\end{column}
+\end{columns}
+\vfill
+
+\note{Pourquoi Charon doit-il exister ? Parce que sans lui, une application CSP historique doit soit être réécrite pour parler BP directement, ce que nous avons exclu, soit ne jamais profiter du DTN. Charon permet à cette application de garder son code intact tout en bénéficiant d'une livraison en stockage et retransmission.}
+\end{frame}
+
+% ============================== SLIDE 14 — CHARON: HOW ==============================
+\begin{frame}{Fonctionnement de Charon}
+
+\vfill
+\bigfig[0.6\textheight]{\begin{tikzpicture}[font=\monofont\normalsize]
+\draw[panel,line width=1.4pt] (0,1.2) rectangle (1.9,2.2); \node[lbli] at (0.95,1.7) {Alice};
+\draw[accenttwobox] (2.5,1.05) rectangle (4.9,2.35); \node[text=accenttwoinkon] at (3.7,1.7) {Charon};
+\draw[panel,line width=1.4pt] (5.5,1.2) rectangle (8.4,2.2); \node[lbli] at (6.95,1.7) {BPA d'Alice};
+\draw[panel2] (9.0,1.2) rectangle (11.9,2.2); \node[text=inkdim] at (10.45,1.7) {topologie DTN};
+\draw[panel,line width=1.4pt] (12.5,1.2) rectangle (15.4,2.2); \node[lbli] at (13.95,1.7) {BPA de Bob};
+\draw[accenttwobox] (16.0,1.05) rectangle (18.4,2.35); \node[text=accenttwoinkon] at (17.2,1.7) {Charon};
+\draw[panel,line width=1.4pt] (19.0,1.2) rectangle (20.9,2.2); \node[lbli] at (19.95,1.7) {Bob};
+
+\draw[arrline] (1.9,1.7) -- (2.4,1.7); \draw[arrline] (4.9,1.7) -- (5.4,1.7);
+\draw[arrline] (8.4,1.7) -- (8.9,1.7); \draw[arrline] (11.9,1.7) -- (12.4,1.7);
+\draw[arrline] (15.4,1.7) -- (15.9,1.7); \draw[arrline] (18.4,1.7) -- (18.9,1.7);
+
+\node[text=inkdim] at (2.15,2.55) {CSP}; \node[text=inkdim] at (5.15,2.55) {AAP2};
+\node[text=inkdim] at (8.65,2.55) {bundle}; \node[text=inkdim] at (12.15,2.55) {bundle};
+\node[text=inkdim] at (15.65,2.55) {AAP2}; \node[text=inkdim] at (18.65,2.55) {CSP};
+\end{tikzpicture}}
+
+\vspace{16pt}
+\centering\milestone{NIVEAU 1 ATTEINT}
+\vfill
+
+\note{Charon est un tunnel léger qui fait transiter du trafic IP, CAN ou CSP sur Bundle Protocol. En mode CSP, l'application d'Alice parle du CSP pur à son instance locale de Charon, qui le transmet à son BPA via l'interface AAP2 de µD3TN. Le bundle traverse la topologie DTN et, de l'autre côté, le BPA de Bob le remet à son Charon, qui le rejoue vers Bob en CSP ordinaire. Aucune des deux applications n'a changé. C'est notre premier jalon : le trafic CSP lui-même circule désormais sur un réseau DTN.}
+\end{frame}
+
+% ============================== SLIDE 15 — CSPCL: WHAT ==============================
+\begin{frame}{CSPCL}
+
+\vfill
+\bigfig[0.6\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0.7,4.65) rectangle (3.7,5.35); \node[lbli] at (2.2,5.0) {BPA};
+\draw[arrline] (2.2,4.65) -- (2.2,4.05);
+\draw[accentbox] (0.9,3.35) rectangle (3.5,4.05); \node[font=\monofont\normalsize,text=accentinkon] at (2.2,3.7) {CSPCL};
+\draw[arrline] (2.2,3.35) -- (2.2,2.75);
+\draw[panel,line width=1.4pt] (0.5,2.05) rectangle (3.9,2.75); \node[lbli] at (2.2,2.4) {CSP / CAN};
+\end{tikzpicture}}
+
+\vspace{16pt}
+\centering{\Large\color{ink}\bfseries Un adaptateur de convergence : des bundles, sur CSP.}
+\vfill
+
+\note{CSPCL est notre réponse pour la couche transport. C'est un adaptateur de couche de convergence --- il permet à un Bundle Protocol Agent d'utiliser CSP comme transport, pour que les nœuds DTN puissent communiquer entre eux, ou avec du matériel CSP, via le bus CAN déjà en place.}
+\end{frame}
+
+% ============================== SLIDE 16 — CSPCL: WHY ==============================
+\begin{frame}{Pourquoi CSPCL}
+
+\vfill
+\centering{\Huge\color{ink}\bfseries BP needs a ride. \\CSP is the road.}
+\vfill
+
+\note{Pourquoi CSPCL doit-il exister ? Parce que côté transport, il n'y a ni nouveau matériel, ni nouvelle liaison radio à venir. Si Bundle Protocol doit circuler sur cette flotte, ce sera sur le CSP et le CAN déjà présents. CSPCL rend cela possible, et portable vers n'importe quel BPA embarqué.}
+\end{frame}
+
+% ============================== SLIDE 17 — CSPCL: HOW (MECHANISM) ==============================
+\begin{frame}{Fonctionnement de CSPCL}
+
+\vfill
+\bigfig[0.7\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,7.7) rectangle (5,8.7); \node[lbli] at (2.5,8.2) {BPA};
+\draw[arrline] (2.5,7.7) -- (2.5,7.2);
+\draw[accentbox] (0,6.4) rectangle (5,7.2); \node[font=\monofont\normalsize,text=accentinkon] at (2.5,6.8) {CSPCL};
+\draw[arrline] (2.5,6.4) -- (2.5,5.9);
+\draw[panel,line width=1.4pt] (0,4.7) rectangle (5,5.9); \node[lbli] at (2.5,5.55) {libcsp};
+\node[font=\monofont\normalsize,text=inkdim] at (2.5,5.05) {RDP + SFP};
+\draw[arrline] (2.5,4.7) -- (2.5,4.2);
+\draw[panel,line width=1.4pt] (0,3.4) rectangle (5,4.2); \node[lbli] at (2.5,3.8) {SocketCAN};
+\draw[arrline] (2.5,3.4) -- (2.5,2.9);
+\draw[accenttwobox] (0,2.1) rectangle (5,2.9); \node[font=\monofont\normalsize,text=accenttwoinkon] at (2.5,2.5) {BUS CAN};
+\end{tikzpicture}}
+
+\vspace{16pt}
+\centering\milestone{NIVEAU 2 ATTEINT}
+\vfill
+
+\note{Mécaniquement, le rôle d'un adaptateur de couche de convergence est de faire correspondre la transmission de bundles à un transport sous-jacent, comme TCPCL le fait pour TCP. CSPCL le fait pour CSP. Il s'appuie sur deux fonctionnalités de CSP : RDP pour les connexions acquittées, et SFP pour la fragmentation, car un bundle est presque toujours plus gros que la MTU d'un paquet CSP. Et il intègre CAN comme transport physique via SocketCAN, pour que les bundles empruntent exactement le même câble que le satellite. C'est notre deuxième jalon : libcspcl, un moteur réutilisable que n'importe quel BPA peut utiliser pour obtenir, à moindre coût, une couche de convergence CSP.}
+\end{frame}
+
+% ============================== SLIDE 18 — CSPCL: HOW (RELIABILITY + PORTABILITY) ==============================
+\begin{frame}{CSPCL --- fiabilité \& portabilité}
+
+\vfill
+\begin{columns}[c]
+\begin{column}{0.52\textwidth}\centering
+\bigfig[0.8\textheight]{\begin{tikzpicture}
+\node[lbli] at (0.8,7.1) {ÉMETTEUR}; \node[lbli] at (7.5,7.1) {RÉCEPTEUR};
+\draw[dimline] (0.8,0.2) -- (0.8,6.8);
+\draw[dimline] (7.5,0.2) -- (7.5,6.8);
+\draw[arrline] (0.8,6.2) -- (7.5,6.2); \node[lblf] at (4.15,6.45) {fragment 1};
+\draw[arrline] (0.8,5.5) -- (7.5,5.5); \node[lblf] at (4.15,5.75) {fragment N};
+\draw[accline] (7.5,4.7) -- (0.8,4.7);
+\node[font=\monofont\normalsize,text=accenttwo] at (4.15,5.0) {ACK : réassemblé};
+\draw[panel2] (0.4,2.4) rectangle (7.9,4.2);
+\node[lbl] at (4.15,3.85) {pas d'ACK à temps};
+\node[font=\monofont\normalsize,text=accent] at (4.15,3.35) {un seul nouvel essai};
+\node[font=\monofont\normalsize,text=warning] at (4.15,2.85) {échec : on prévient le BPA};
+\end{tikzpicture}}
+\end{column}
+\begin{column}{0.44\textwidth}\centering
+\bigfig[0.6\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,3.6) rectangle (3.6,5.3); \node[font=\sffamily\bfseries,text=ink] at (1.8,4.45) {Unibo-BP};
+\draw[panel,line width=1.4pt] (5.2,3.6) rectangle (8.8,5.3); \node[font=\sffamily\bfseries,text=ink] at (7.0,4.45) {\muD};
+\draw[panel,line width=1.4pt] (10.4,3.6) rectangle (14.0,5.3); \node[font=\sffamily\bfseries,text=ink] at (12.2,4.45) {Hardy};
+\draw[arrline] (1.8,3.6) -- (1.8,2.5);
+\draw[arrline] (7.0,3.6) -- (7.0,2.1);
+\draw[arrline] (12.2,3.6) -- (12.2,2.5);
+\draw[line,line width=1.2pt] (1.8,2.5) -- (12.2,2.5);
+\draw[accentbox] (4.3,1.2) rectangle (9.7,2.1);
+\node[font=\monofont\normalsize,text=accentinkon] at (7.0,1.65) {libcspcl};
+\end{tikzpicture}}
+
+\vspace{10pt}
+\milestone{NIVEAU 3 ATTEINT}
+\end{column}
+\end{columns}
+\vfill
+
+\note{Deux choses encore. D'abord, la fiabilité : les acquittements de CSP confirment seulement qu'un paquet a été transmis, pas que l'autre extrémité a réassemblé tout le bundle --- CSPCL ajoute donc son propre acquittement de bout en bout, fait un seul nouvel essai, et prévient le BPA en cas d'échec persistant. Ensuite, la portabilité : nous avons intégré le même cœur dans trois BPA structurellement différents --- Unibo-BP en démon autonome, µD3TN dans le même processus, Hardy via une liaison FFI Rust asynchrone. Même sémantique, trois formes d'intégration très différentes. C'est notre troisième jalon : du trafic BP et DTN circule réellement sur un réseau CSP, avec trois BPA indépendants.}
+\end{frame}
+
+% ============================== SLIDE 19 — HARDWARE ==============================
+\begin{frame}{Le banc d'essai}
+
+\vfill
+\bigfig[0.4\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,0) rectangle (5,2.2); \node[font=\sffamily\bfseries,text=ink] at (2.5,1.5) {PolarFire SoC};
+\node[lbl] at (2.5,0.9) {RISC-V, carte A};
+\draw[panel,line width=1.4pt] (10.6,0) rectangle (15.6,2.2); \node[font=\sffamily\bfseries,text=ink] at (13.1,1.5) {PolarFire SoC};
+\node[lbl] at (13.1,0.9) {RISC-V, carte B};
+\draw[accline,line width=1.6pt] (5,1.1) -- (10.6,1.1);
+\foreach \x in {6.4,7.4,8.4,9.2} \draw[line] (\x,1.1) -- (\x,0.55);
+\node[font=\monofont\normalsize,text=accenttwo] at (7.8,1.8) {bus CAN (SocketCAN)};
+\end{tikzpicture}}
+
+\vspace{18pt}
+\centering\photo{0.4\linewidth}{0.32\textheight}{polarfire_boards.png}
+\vfill
+
+\note{Nous ne nous sommes pas contentés de la simulation. Deux cartes de développement RISC-V Microchip PolarFire SoC, reliées par un vrai bus CAN, avec SocketCAN --- exactement l'exigence de matériel réel évoquée plus tôt, et le reflet de l'architecture avionique de la future mission CubeSat 12U du CSUM. Sur ce matériel, nous avons validé deux nœuds Hardy communiquant via CSPCL avec le routage A-SABR, et deux nœuds Unibo-BP faisant de même.}
+\end{frame}
+
+% ============================== SLIDE 20 — DEMO: FOUR-NODE CHAIN ==============================
+\begin{frame}{La chaîne complète}
+
+\vfill
+\bigfig{\includegraphics{full_chain.png}}
+\vfill
+
+\note{Pour le test de bout en bout, nous avons construit une chaîne de quatre nœuds où chaque saut utilise volontairement une combinaison transport/BPA différente --- hétérogénéité maximale. Alice est un µD3TN avec le moteur de routage A-SABR, qui fait entrer du trafic IP via Charon et le fait sortir en TCPCL. Unibo-BP le reçoit en TCPCL et le transmet sur un bus CAN virtuel via CSPCL. Hardy parle CAN des deux côtés. Et le tout arrive chez Bob, de nouveau µD3TN, qui le rend à Charon puis à l'application réceptrice.}
+\end{frame}
+
+% ============================== SLIDE 21 — STATS: FRAMING OVERHEAD ==============================
+\begin{frame}{Surcoût d'encapsulation}
+
+\vfill
+\bigfig[0.66\textheight]{\begin{tikzpicture}
+\draw[line] (0,0) -- (11,0);
+\draw[dimline] (0,4.3) -- (11,4.3); \node[lblf,anchor=east] at (-0.2,4.3) {86\,\%};
+\draw[dimline] (0,2.15) -- (11,2.15); \node[lblf,anchor=east] at (-0.2,2.15) {43\,\%};
+\node[lblf,anchor=east] at (-0.2,0) {0\,\%};
+
+\draw[accentbox] (1.1,0) rectangle (2.9,4.14);
+\node[lbli] at (2.0,4.5) {85,9\,\%};
+\node[lbl] at (2.0,-0.45) {64 o};
+
+\draw[accentbox] (3.9,0) rectangle (5.7,1.30);
+\node[lbli] at (4.8,1.66) {27,0\,\%};
+\node[lbl] at (4.8,-0.45) {256 o};
+
+\draw[accenttwobox] (6.7,0) rectangle (8.5,0.51);
+\node[lbli] at (7.6,0.87) {10,6\,\%};
+\node[lbl] at (7.6,-0.45) {1024 o};
+
+\draw[accenttwobox] (9.5,0) rectangle (10.9,0.31);
+\node[lbli] at (10.2,0.67) {6,5\,\%};
+\node[lbl] at (10.2,-0.45) {4096 o};
+\end{tikzpicture}}
+
+
+
+\note{D'abord le coût d'encapsulation. Un bundle BP7 porte un surcoût d'encapsulation CBOR, et CSPCL le fragmente encore via SFP. Pour une toute petite charge utile de 64 octets, ce surcoût représente près de quatre-vingt-six pour cent des octets transmis. Mais il chute vite : à 4096 octets, il n'est plus que de six et demi pour cent. La leçon pour un opérateur : regrouper la télémétrie en bundles moins nombreux et plus gros, dès que la mission le permet.}
+\end{frame}
+
+% ============================== SLIDE 22 — STATS: MTU SURPRISE ==============================
+\begin{frame}{Une surprise côté MTU}
+
+\vfill
+\begin{columns}[c]
+\begin{column}{0.46\textwidth}
+\centering
+\bigfig[0.62\textheight]{\begin{tikzpicture}
+\draw[panel,line width=1.4pt] (0,2.4) rectangle (0.25,5.4);
+\draw[panel,line width=1.4pt] (5.9,2.4) rectangle (6.15,5.4);
+\node[lbl] at (3.075,5.8) {TUN, MTU 1500 o};
+\draw[warnbox,line width=1.4pt] (1.575,4.15) rectangle (4.575,5.65);
+\node[font=\monofont\normalsize,text=warning] at (3.075,5.15) {4096 o};
+\node[font=\monofont\normalsize,text=warning] at (3.075,4.55) {charge utile};
+\draw[dimline] (3.075,4.15) -- (3.075,3.6);
+\draw[accenttwobox] (0.9,2.1) rectangle (2.9,3.6); \node[font=\monofont\normalsize,text=accenttwoinkon] at (1.9,2.85) {trajet 1};
+\draw[accenttwobox] (3.25,2.1) rectangle (5.25,3.6); \node[font=\monofont\normalsize,text=accenttwoinkon] at (4.25,2.85) {trajet 2};
+\end{tikzpicture}}
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\bigfig[0.62\textheight]{\begin{tikzpicture}
+\draw[line] (0,0) -- (9,0);
+\draw[accenttwobox] (1.6,0) rectangle (3.2,0.26); \node[lbli] at (2.4,0.62) {8,55 ms};
+\node[lbl] at (2.4,-0.45) {BP seul};
+\draw[warnbox,fill=warning] (5.4,0) rectangle (7.0,4.0); \node[lbli] at (6.2,4.4) {208,7 ms};
+\node[lbl] at (6.2,-0.45) {via Charon};
+\node[font=\monofont\LARGE,text=warning] at (4.2,2.5) {$\times$24};
+\end{tikzpicture}}
+\end{column}
+\end{columns}
+\vfill
+
+\note{Voici un résultat inattendu. La latence de Charon suit de près celle de Bundle Protocol seul jusqu'à 1024 octets. Mais à 4096 octets, elle est multipliée par environ vingt-quatre. En creusant : le mode IP de Charon lit depuis une interface TUN Linux avec la MTU par défaut de 1500 octets. Une charge de 4096 octets ne passe pas en une seule fois, donc le noyau la fragmente silencieusement en plusieurs paquets IP, chacun passant indépendamment par le tunnel sur le même saut. Un coût réel, et mesuré, de la conception par tunnel IP.}
+\end{frame}
+
+% ============================== SLIDE 23 — STATS: THROUGHPUT & DELIVERY ==============================
+\begin{frame}{Débit \& livraison}
+
+\vfill
+\bigfig[0.5\textheight]{\begin{tikzpicture}
+\node[lbl] at (-0.6,1.6) {64 o};
+\draw[panel2] (0,1.28) rectangle (9,1.92);
+\draw[accenttwobox] (0,1.28) rectangle (7.10,1.92);
+\node[font=\monofont\normalsize,text=accenttwoinkon,anchor=east] at (6.9,1.6) {78,9\,\%};
+
+\node[lbl] at (-0.6,0.4) {256 o};
+\draw[panel2] (0,0.08) rectangle (9,0.72);
+\draw[accenttwobox] (0,0.08) rectangle (8.47,0.72);
+\node[font=\monofont\normalsize,text=accenttwoinkon,anchor=east] at (8.27,0.4) {94,1\,\%};
+\end{tikzpicture}}
+
+\vspace{10pt}
+\centering{\small\color{inkdim} 78,9\,\% et 94,1\,\% : débit en \% du plafond modélisé par le plan de contacts}
+
+\vspace{18pt}
+\centering\chipstrong{100\,\% livrés}\\[6pt]
+\centering{\small\color{inkdim} sur 100 itérations}
+\vfill
+
+\note{En revenant à la chaîne complète de quatre nœuds, bridée aux débits modélisés du plan de contacts : la livraison a été totalement fiable pour les deux tailles de charge testées. Le débit obtenu atteint soixante-dix-neuf à quatre-vingt-quatorze pour cent du plafond théorique, ce qui correspond au surcoût par saut vu précédemment, cumulé sur trois sauts et deux décisions de routage indépendantes.}
+\end{frame}
+
+% ============================== SLIDE 24 — STATS: DISRUPTION TEST ==============================
+\begin{frame}{Test de coupure}
+
+\vfill
+\centering
+\begin{tcolorbox}[colback=bgpanel2, colframe=line, boxrule=0.8pt, arc=6pt,
+  left=18pt,right=18pt,top=16pt,bottom=16pt, width=0.85\linewidth]
+{\monofont\Large
+\textcolor{inkdim}{\$} \textcolor{ink}{kill -9 unibo-bp-cspcl}\\[10pt]
+\textcolor{accent}{[bundle]} \textcolor{ink}{conservé en stockage}\\[10pt]
+\textcolor{accenttwo}{[unibo-bp-cspcl]} \textcolor{ink}{redémarré}\\[10pt]
+\textcolor{accenttwo}{[bundle]} \textcolor{ink}{livré}
+}
+\end{tcolorbox}
+
+\vspace{22pt}
+{\Large\color{accenttwo}\bfseries Stockage et retransmission : validé.}
+\vfill
+
+\note{Puis nous avons essayé de le casser volontairement. Nous avons tué le démon unibo-bp-cspcl en plein transfert, en perdant tout l'état de son pool de connexions, et l'avons laissé arrêté quelques secondes avec des bundles en transit. Le trafic destiné au nœud coupé a simplement été conservé en stockage par son voisin. Dès le redémarrage du démon, la livraison a repris et s'est terminée, sans aucune perte de données.}
+\end{frame}
+
+% ============================== SLIDE 25 — LIMITATIONS \& FUTURE: ABOVE (CHARON) ==============================
+\begin{frame}{Charon --- au-dessus}
+
+\vfill
+\begin{cardbox}
+\Large
+\led{accent}\ \textbf{\color{ink}Un seul BPA pris en charge}
+\vspace{10pt}\hrule height 0.4pt \color{linesoft}\vspace{10pt}
+\led{accent}\ \textbf{\color{ink}Pas de file d'attente locale}
+\vspace{10pt}\hrule height 0.4pt \color{linesoft}\vspace{10pt}
+\led{accent}\ \textbf{\color{ink}Pas de routage CSP en mode CSP}
+\vspace{10pt}\hrule height 0.4pt \color{linesoft}\vspace{10pt}
+\led{accenttwo}\ \textbf{\color{ink}Suite : au-delà de \muD}
+\end{cardbox}
+\vfill
+
+\note{Côté Charon : il ne s'intègre directement qu'avec µD3TN aujourd'hui, via AAP2. Il n'a pas de tampon de paquets propre, donc si le BPA est brièvement indisponible, les paquets en transit sont perdus, pas mis en file d'attente. Et le mode CSP offre une association point à point entre deux pairs nommés, pas un routage CSP général à travers la topologie DTN. Prochaine étape : étendre la prise en charge de Charon au-delà de µD3TN, à Unibo-BP, Hardy et ION-DTN.}
+\end{frame}
+
+% ============================== SLIDE 26 — LIMITATIONS \& FUTURE: BELOW (CSPCL) ==============================
+\begin{frame}{CSPCL --- en dessous}
+
+\vfill
+\begin{cardbox}
+\Large
+\led{accenttwo}\ \textbf{\color{ink}Intégration complète de A-SABR}
+\vspace{10pt}\hrule height 0.4pt \color{linesoft}\vspace{10pt}
+\led{accenttwo}\ \textbf{\color{ink}Support des microcontrôleurs}
+\end{cardbox}
+\vfill
+
+\note{Côté CSPCL : la prochaine étape est d'utiliser A-SABR comme algorithme de routage, pour que les décisions de routage restent alignées sur la logique de plan de contacts utilisée ailleurs dans la pile. Ensuite : A-SABR est en cours de portage sur microcontrôleurs, et CSPCL devrait suivre, pour valider aussi sur les CubeSats non-Linux du CSUM. Et côté ingénierie, le mutex unique du pool de connexions est le goulot d'étranglement de latence vu plus tôt --- réduire sa portée à la seule gestion du pool est la prochaine correction.}
+\end{frame}
+
+% ============================== SLIDE 27 — THANK YOU ==============================
+\begin{frame}[plain]
+\vspace{18pt}
+\eyebrow{Merci}\\[16pt]
+{\fontsize{44}{44}\selectfont\bfseries\color{ink} Des questions ?}\\[16pt]
+{\Large\color{inkdim} Adoption non disruptive du DTN pour les CubeSats CSP.}\\[8pt]
+
+ \chip{Sarah Theoulle} \chip{Olivier De Jonck\`ere}
+
+\vspace{8pt}
+\chip{LIRMM $\cdot$ CSUM}
+
+\note{Merci --- je serai ravi de répondre à vos questions, que ce soit sur les détails internes de la couche de convergence, le proxy Charon ou le protocole d'évaluation.}
+\end{frame}
+
+\end{document}
