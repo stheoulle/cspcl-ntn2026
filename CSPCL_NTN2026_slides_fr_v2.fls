@@ -1,6 +1,6 @@
-PWD C:\Users\sarah theoulle\Documents\LIRMM\ntn
+PWD c:\Users\sarah theoulle\Documents\LIRMM\ntn
 INPUT C:\Users\sarah theoulle\AppData\Local\MiKTeX\miktex\data\le\xetex\xelatex.fmt
-INPUT CSPCL_NTN2026_slides_fr_v2.tex
+INPUT c:\Users\sarah theoulle\Documents\LIRMM\ntn\CSPCL_NTN2026_slides_fr_v2.tex
 OUTPUT CSPCL_NTN2026_slides_fr_v2.log
 INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\beamer\beamer.cls
 INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\beamer\beamer.cls
@@ -330,3 +330,131 @@ INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\iftex\if
 INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\iftex\ifxetex.sty
 INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\iftex\ifluatex.sty
 INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\iftex\ifluatex.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarycalc.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarycalc.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryshapes.geometric.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryshapes.geometric.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\shapes\pgflibraryshapes.geometric.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\shapes\pgflibraryshapes.geometric.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcolorbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcolorbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tools\verbatim.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tools\verbatim.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\environ\environ.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\environ\environ.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\trimspaces\trimspaces.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\trimspaces\trimspaces.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbskins.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tikzfill\tikzfill.image.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tikzfill\tikzfill.image.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tikzfill\tikzlibraryfill.image.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tikzfill\tikzlibraryfill.image.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbskinsjigsaw.code.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\adjustbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\adjustbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\xkeyval\xkeyval.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\xkeyval\xkeyval.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\xkeyval\xkeyval.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\generic\xkeyval\xkvutils.tex
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\adjcalc.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\adjcalc.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\trimclip.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\trimclip.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\collectbox\collectbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\collectbox\collectbox.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\tc-xetex.def
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\tc-xetex.def
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\adjustbox\tc-xetex.def
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\ifoddpage\ifoddpage.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\ifoddpage\ifoddpage.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\ifoddpage\ifoddpage.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\varwidth\varwidth.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\varwidth\varwidth.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\varwidth\varwidth.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\pgf\utilities\pgfpages.sty
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\pgf\utilities\pgfpages.sty
+INPUT .\CSPCL_NTN2026_slides_fr_v2.aux
+INPUT .\CSPCL_NTN2026_slides_fr_v2.aux
+INPUT CSPCL_NTN2026_slides_fr_v2.aux
+OUTPUT CSPCL_NTN2026_slides_fr_v2.aux
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out
+INPUT CSPCL_NTN2026_slides_fr_v2.out
+INPUT CSPCL_NTN2026_slides_fr_v2.out
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out
+OUTPUT CSPCL_NTN2026_slides_fr_v2.out
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-basic-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-basic-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-basic-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-bibliography-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-bibliography-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-bibliography-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-environment-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-environment-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-environment-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-months-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-months-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-months-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-numbers-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-numbers-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-numbers-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-theorem-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-theorem-dictionary-English.dict
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\translator\translator-theorem-dictionary-English.dict
+INPUT .\CSPCL_NTN2026_slides_fr_v2.nav
+INPUT .\CSPCL_NTN2026_slides_fr_v2.nav
+INPUT CSPCL_NTN2026_slides_fr_v2.nav
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT .\slides_assets\csum_map.png
+INPUT .\slides_assets\csum_map.png
+INPUT .\slides_assets\csum_building.png
+INPUT .\slides_assets\csum_building.png
+INPUT .\slides_assets\control_room.png
+INPUT .\slides_assets\control_room.png
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT .\slides_assets\polarfire_boards.png
+INPUT .\slides_assets\polarfire_boards.png
+INPUT .\slides_assets\full_chain.png
+INPUT .\slides_assets\full_chain.png
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\sarah theoulle\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+OUTPUT CSPCL_NTN2026_slides_fr_v2.nav
+OUTPUT CSPCL_NTN2026_slides_fr_v2.toc
+OUTPUT CSPCL_NTN2026_slides_fr_v2.snm
+INPUT CSPCL_NTN2026_slides_fr_v2.aux
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out
+INPUT .\CSPCL_NTN2026_slides_fr_v2.out

@@ -1,9 +1,10 @@
+%!TeX root = CSPCL_NTN2026_slides_fr_v2.tex
 \documentclass[aspectratio=169,10pt]{beamer}
 
 % ============================== SETUP ==============================
 \usepackage{fontspec}
-\setmainfont{Noto Sans}
-\setsansfont{Noto Sans}
+\setmainfont{TeX Gyre Heros}
+\setsansfont{TeX Gyre Heros}
 \newfontfamily\monofont{Noto Sans Mono}
 \usepackage{polyglossia}
 \setdefaultlanguage{french}
@@ -162,7 +163,7 @@
 \begin{column}{0.49\textwidth}
 \ovcard{Outillage}{%
 \nowled Protocole --- BP + CSPCL\\
-\laterled Routage --- A-SABR\\
+\nowled Routage --- A-SABR\\
 \nowled Interopérabilité --- Charon}
 \end{column}
 \begin{column}{0.49\textwidth}
@@ -184,13 +185,9 @@
 \ovcard{Partenaires}{%
 \laterled CSUM\\
 \laterled Étudiants de Montpellier et d'ailleurs\\
-\laterled Juan, Marius (D3TN), \dots}
+\laterled Juan Fraire (INRIA), D3TN, Université de Bologne \dots}
 \end{column}
 \end{columns}
-
-\vspace{2pt}
-\centering{\small\color{inkdim} \nowled abordé aujourd'hui}
-\vfill
 
 \note{CSPCL et Charon font partie d'un projet plus large, VISTA. Côté outillage : le protocole, avec Bundle Protocol et CSPCL ; le routage, avec A-SABR ; et l'interopérabilité, avec Charon. Côté modèles : l'optimisation du routage et l'internetworking. Nos ambitions : un vrai réseau DTN pour les opérations, le protocole et le routage sur microcontrôleur pour les CubeSats sans Linux, et un laboratoire pour les chercheurs. Et tout cela avec nos partenaires : le CSUM, les étudiants de Montpellier et d'ailleurs, Juan, Marius et D3TN. Aujourd'hui, je me concentre sur les deux briques en vert : le protocole et l'interopérabilité.}
 \end{frame}
@@ -718,32 +715,7 @@
 \note{Voici un résultat inattendu. La latence de Charon suit de près celle de Bundle Protocol seul jusqu'à 1024 octets. Mais à 4096 octets, elle est multipliée par environ vingt-quatre. En creusant : le mode IP de Charon lit depuis une interface TUN Linux avec la MTU par défaut de 1500 octets. Une charge de 4096 octets ne passe pas en une seule fois, donc le noyau la fragmente silencieusement en plusieurs paquets IP, chacun passant indépendamment par le tunnel sur le même saut. Un coût réel, et mesuré, de la conception par tunnel IP.}
 \end{frame}
 
-% ============================== STATS: THROUGHPUT & DELIVERY ==============================
-\begin{frame}{Débit \& livraison}
 
-\vfill
-\bigfig[0.5\textheight]{\begin{tikzpicture}
-\node[lbl] at (-0.6,1.6) {64 o};
-\draw[panel2] (0,1.28) rectangle (9,1.92);
-\draw[accenttwobox] (0,1.28) rectangle (7.10,1.92);
-\node[font=\monofont\normalsize,text=accenttwoinkon,anchor=east] at (6.9,1.6) {78,9\,\%};
-
-\node[lbl] at (-0.6,0.4) {256 o};
-\draw[panel2] (0,0.08) rectangle (9,0.72);
-\draw[accenttwobox] (0,0.08) rectangle (8.47,0.72);
-\node[font=\monofont\normalsize,text=accenttwoinkon,anchor=east] at (8.27,0.4) {94,1\,\%};
-\end{tikzpicture}}
-
-\vspace{10pt}
-\centering{\small\color{inkdim} 78,9\,\% et 94,1\,\% : débit en \% du plafond modélisé par le plan de contacts}
-
-\vspace{18pt}
-\centering\chipstrong{100\,\% livrés}\\[6pt]
-\centering{\small\color{inkdim} sur 100 itérations}
-\vfill
-
-\note{En revenant à la chaîne complète de quatre nœuds, bridée aux débits modélisés du plan de contacts : la livraison a été totalement fiable pour les deux tailles de charge testées. Le débit obtenu atteint soixante-dix-neuf à quatre-vingt-quatorze pour cent du plafond théorique, ce qui correspond au surcoût par saut vu précédemment, cumulé sur trois sauts et deux décisions de routage indépendantes.}
-\end{frame}
 
 % ============================== STATS: DISRUPTION TEST ==============================
 \begin{frame}{Test de coupure}

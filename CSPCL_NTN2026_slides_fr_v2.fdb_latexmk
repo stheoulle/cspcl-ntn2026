@@ -1,10 +1,5 @@
 # Fdb version 4
-["xdvipdfmx"] 1790940256.46176 "CSPCL_NTN2026_slides_fr_v2.xdv" "CSPCL_NTN2026_slides_fr_v2.pdf" "CSPCL_NTN2026_slides_fr_v2" 1790940387.78135 0
-  "CSPCL_NTN2026_slides_fr_v2.xdv" 0 -1 0 "xelatex"
-  (generated)
-  "CSPCL_NTN2026_slides_fr_v2.pdf"
-  (rewritten before read)
-["xelatex"] 1790940387.84226 "CSPCL_NTN2026_slides_fr_v2.tex" "CSPCL_NTN2026_slides_fr_v2.xdv" "CSPCL_NTN2026_slides_fr_v2" 1790940414.04841 2
+["pdflatex"] 1791278434.57771 "c:/Users/sarah theoulle/Documents/LIRMM/ntn/CSPCL_NTN2026_slides_fr_v2.tex" "CSPCL_NTN2026_slides_fr_v2.pdf" "CSPCL_NTN2026_slides_fr_v2" 1791278470.36884 0
   "C:/Users/sarah theoulle/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1790328998 27180460 e05d77bb39ff4f31d14b32a360d63d3c ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768654 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
@@ -81,7 +76,6 @@
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgf.cfg" 1756451144 926 2963ea0dcf6cc6c0a770b69ec46a477b ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def" 1756451144 5542 32f75a31ea6c3a7e1148cd6d5e93dbb7 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def" 1756451144 18502 31140cc20a1b5a69491b497afc514e2d ""
-  "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsys-pdftex.def" 1756451144 12612 7774ba67bfd72e593c4436c2de6201e3 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsys-xetex.def" 1756451144 2926 cf943e23420d552258ae428601f26fbf ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsys.code.tex" 1756451144 61355 39904e7552da3800a6838d41440943a5 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex" 1756451144 1896 b8e0ca0ac371d74c0ca05583f6313c91 ""
@@ -167,7 +161,6 @@
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geometry.sty" 1773583286 41904 7711079366884e0d15963c9d40019853 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics-cfg/color.cfg" 1465894292 1213 620bba36b25224fa9b7e1ccb4ecb76fd ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics-cfg/graphics.cfg" 1465894292 1224 978390e9c2234eab29404bc21b268d1e ""
-  "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics-def/pdftex.def" 1762694372 19626 23e2822b9b2b5005f4c549ca98b9334d ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics-def/xetex.def" 1762694372 14788 68cddb076430acc268ef4203b6523355 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics/graphics.sty" 1749322634 18363 69bb4f5538964bfea50d1e6d89cbe69f ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics/graphicx.sty" 1749322634 8118 43b99e52946c33a23f5f43b52d5cc5ec ""
@@ -175,7 +168,6 @@
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics/mathcolor.ltx" 1749322634 2885 9c645d672ae17285bba324998918efd8 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/graphics/trig.sty" 1749322634 4023 e66acf578d6b564c4670fb57ff336a7a ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/hycolor/hycolor.sty" 1580380792 18571 4c28a13fc3d975e6e81c9bea1d697276 ""
-  "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/hpdftex.def" 1752319040 48140 5e8a3a4aa88ae09b90d524926a067201 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/hxetex.def" 1752319040 44484 2937e762e6dc331359a12c6356655f4f ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/hyperref.sty" 1752319040 223112 93e90b2b1b3ef21af41adaf029922dd3 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/nameref.sty" 1752319040 11027 0fe7ce2c6b5291fd809c2de7bbdca37e ""
@@ -229,11 +221,11 @@
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/varwidth/varwidth.sty" 1238469540 10894 d359a13923460b2a73d4312d613554c8 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/sarah theoulle/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
-  "CSPCL_NTN2026_slides_fr_v2.aux" 1790940380 32 3985256e7290058c681f74d7a3565a19 "xelatex"
-  "CSPCL_NTN2026_slides_fr_v2.nav" 1790940255 2783 f8b0d1eaf383f71e4268670ac899f7e1 ""
-  "CSPCL_NTN2026_slides_fr_v2.out" 0 -1 0 ""
-  "CSPCL_NTN2026_slides_fr_v2.tex" 1790940383 42714 9796381913bdd6c0b01035c2ec40215a ""
-  "c:/Users/sarah theoulle/Documents/LIRMM/ntn/CSPCL_NTN2026_slides_fr_v2.tex" 1790940383 42714 9796381913bdd6c0b01035c2ec40215a ""
+  "CSPCL_NTN2026_slides_fr_v2.aux" 1791278469 5132 2c8547bd408bf32334880c0467a8298e "pdflatex"
+  "CSPCL_NTN2026_slides_fr_v2.nav" 1791278469 2690 5474d22c5ffff884555771824040e220 "pdflatex"
+  "CSPCL_NTN2026_slides_fr_v2.out" 1791278461 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "CSPCL_NTN2026_slides_fr_v2.tex" 1791275848 41387 2eb71d6dfbd98b14b7e8cfedd745436c ""
+  "c:/Users/sarah theoulle/Documents/LIRMM/ntn/CSPCL_NTN2026_slides_fr_v2.tex" 1791275848 41387 2eb71d6dfbd98b14b7e8cfedd745436c ""
   "slides_assets/control_room.png" 1790328434 2120554 f91b0aee909348eecf16db08da29712e ""
   "slides_assets/csum_building.png" 1790328434 984239 ab6fbd371fc52afafeb402f046e1bb42 ""
   "slides_assets/csum_map.png" 1790328434 766767 c3d8c7b79775a3ba54f0076b2ddbe78b ""
@@ -242,5 +234,9 @@
   (generated)
   "CSPCL_NTN2026_slides_fr_v2.aux"
   "CSPCL_NTN2026_slides_fr_v2.log"
-  "CSPCL_NTN2026_slides_fr_v2.xdv"
+  "CSPCL_NTN2026_slides_fr_v2.nav"
+  "CSPCL_NTN2026_slides_fr_v2.out"
+  "CSPCL_NTN2026_slides_fr_v2.pdf"
+  "CSPCL_NTN2026_slides_fr_v2.snm"
+  "CSPCL_NTN2026_slides_fr_v2.toc"
   (rewritten before read)

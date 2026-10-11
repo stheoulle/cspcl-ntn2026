@@ -1,0 +1,54 @@
+Slide 3 : pin en belgique a enlever et merge avec slide 4
+SLide 5 : Enlever Rappel, RFC 4838 (DTN architecture)
+Slide 5-5bis-6 : dtn-gif.gif
+Protocol overlay
+Slide 6 : Challenge plutot que problème
+Slide 6 : CSP flight proven en réseau interne sur satellite, way to go pour opérateurs cubesat (à vérifier), protocole non dtn, passer de csp à bp c'est un saut que les petits acteurs ne sont pas prêts à faire
+BP sexy mais c'est un risque, changement de stack
+Slide 7 à enlever : Les opérateurs sont pas prêts à passer sur BP à cause des risque avant évaluation des gains de Bp. Nous on veut leverage le fait que bp soit protocol overlay donc les acteurs peuvent tester la tolérence aux délais sans changer la stack
+BP sur CSP grâce à la nature d'overlay, on peut proposer de tester BP sans changer la stack
+Slide 8 : Enlever
+Slide 9 : Reprendre le gif et mettre cspcl comme brick à la bonne pace
+Besoin d'un petit adapteur pour faire le lien entre csp et bp, et donc on en a crée un (cspcl)
+On peut garder csp pour le réseau interne aussi, sur le can bus (qui est la brique en dessous)
+
+Slide 10 : Enlever
+Slide 12 : BPA modifier en "3 implémentation différentes du bundle protocol"
+
+Enlever niveau 1, 2 et 3
+
+Niveau 1 : Discussion avec protocole CSP
+Niveau 2 : Fiabilité pour les bundles sur CSP
+
+Slide 12 reformuler fragment (pas comprehensible que c'est fragment de bundle)
+
+Slide 13 : Challenge 2 : Comment applications existantes peuvent agir de façon delay tolerant
+Solution charon
+
+Merge 13 à 18 pour une slide charon : comment on résout challenge
+Slide 14 : Proxy pour packager des paquets CSP au dessus de BP et repasser en dessous ensuite
+
+New slide : Maintenant on a tout comment on test
+Slide 20 : A quoi ça ressemble la chaîne complète
+New slide : ASABR (utilisé par Juan notamment), pas mal de travaux autour de la gestion des ressources (pas de qualité de seervice de manière réactive donc optim du routage)
+Liste de ce qui est compris dedans : gestion volume, ressource des nodes, support pour internetworking (théo), support µcontrolleur, différent backend pour plein d'implémentation d'algo différents
+Librairie pour instancer differentes stratégies de routage
+
+Slide 19 : Le banc d'essai à passer après la slide 20
+Enlever les autres slides de test, on garde juste le banc d'essai mais on y dit aussi qu'on test le disruption
+Pourquoi polarfire soc : message bas slide 19
+
+Ambition de support micro-controller (on vise soc linux pour l'instant mais on pourra avoir envie de porter sur micro-controller (picod3tn pressenti car BPA a vocation a être micro-controller compatible))
+Dire qu'on fait tout en rust
+Projet de Burak : modèle d'optimisation pour obtenir les limites théoriques de routage pour le benchmarking
+
+Futur work : Cloud native spatial d3tn, pcb dedié permettant aux chercheurs de lancer des expériences conteneurisées tolérantes aux délais. Laboratoire volant pour les expériences dtn et non dtn
+
+Acknowledge clair des gens qui ont contribué au projet :
+Photo stint avec tout le monde, pas mal d'étudiants, open source et possible de contribuer 
+
+
+Deep space - tiptop (IP) mailing list
+STAR (routage) mailing list
+CCSDS (matera ?)
+
