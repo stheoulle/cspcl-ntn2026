@@ -1,11 +1,16 @@
-%!TeX root = CSPCL_NTN2026_slides_fr_v2.tex
+%!TeX root = CSPCL_NTN2026_slides_fr_v3.tex
 \documentclass[aspectratio=169,10pt]{beamer}
 
 % ============================== SETUP ==============================
 \usepackage{fontspec}
 \setmainfont{TeX Gyre Heros}
 \setsansfont{TeX Gyre Heros}
-\newfontfamily\monofont{Noto Sans Mono}
+% xdvipdfmx ne gère pas la version variable de Noto Sans Mono (Fedora) :
+% on charge les fichiers statiques s'ils existent, sinon la police par son nom.
+\IfFileExists{/usr/share/fonts/google-noto/NotoSansMono-Regular.ttf}
+  {\newfontfamily\monofont{NotoSansMono}[Path=/usr/share/fonts/google-noto/,
+    Extension=.ttf, UprightFont=*-Regular, BoldFont=*-Bold]}
+  {\newfontfamily\monofont{Noto Sans Mono}}
 \usepackage{polyglossia}
 \setdefaultlanguage{french}
 
@@ -72,6 +77,9 @@
 \newtcbox{\chipstrong}[1][]{on line, arc=9pt, colframe=accent, colback=bgpanel2,
   boxrule=1pt, top=4pt, bottom=4pt, left=10pt, right=10pt,
   fontupper=\monofont\normalsize\bfseries, before upper={\color{ink}}, #1}
+\newtcbox{\chipsm}[1][]{on line, arc=8pt, colframe=line, colback=bgpanel2,
+  boxrule=0.8pt, top=2pt, bottom=2pt, left=8pt, right=8pt,
+  fontupper=\monofont\small, before upper={\color{ink}}, #1}
 \newtcbox{\milestone}[1][]{on line, arc=10pt, colframe=accenttwo, colback=accenttwo,
   boxrule=0pt, top=5pt, bottom=5pt, left=14pt, right=14pt,
   fontupper=\monofont\normalsize\bfseries, before upper={\color{accenttwoinkon}}, #1}
@@ -167,8 +175,106 @@
 \note{Bonjour. Je vais vous présenter comment amener progressivement les réseaux tolérants aux délais chez les opérateurs de CubeSats qui utilisent déjà le CubeSat Space Protocol, sans toucher à ce qui fonctionne déjà. C'est un travail du LIRMM, mené avec le Centre Spatial Universitaire de Montpellier, et une partie d'un projet plus large.}
 \end{frame}
 
-% ============================== OVERVIEW (VISTA) ==============================
-\begin{frame}{Le projet VISTA}
+% ============================== CSUM (building + control room) ==============================
+\begin{frame}{Le CSUM}
+
+\vfill
+\centering
+\begin{columns}[c]
+\begin{column}{0.42\textwidth}\centering
+\photo{\linewidth}{0.55\textheight}{csum_building.png}
+\end{column}
+\begin{column}{0.54\textwidth}\centering
+\photo{\linewidth}{0.55\textheight}{control_room.png}
+\end{column}
+\end{columns}
+
+\vspace{12pt}
+\chip{Montpellier, France}\\[8pt]
+\takeaway{Centre Spatial de l'Université de Montpellier : conçoit et opère ses propres CubeSats\\ (seul le lancement n'est pas maîtrisé en interne) --- une mission 12U en préparation.}
+\vfill
+
+\note{Ce travail existe grâce à un vrai client : le CSUM, le Centre Spatial de l'Université de Montpellier. Le CSUM conçoit et opère ses propres CubeSats : de bout en bout, la seule étape qu'il ne maîtrise pas est le lancement. À droite, sa salle de contrôle : de vraies opérations, menées par une petite équipe, sur une pile qu'elle connaît par cœur. Le CSUM prépare une mission CubeSat 12U et, comme la plupart des équipes CubeSat universitaires, il fonctionne avec un petit budget. On ne remplace pas une telle pile du jour au lendemain : c'est la réalité que toute transition vers le DTN doit respecter.}
+\end{frame}
+
+% ============================== DTN (GIF frames 1-2) ==============================
+\begin{frame}{Delay/Disruption-Tolerant Networking (DTN)}
+
+\vfill
+\centering
+\includegraphics<1>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_1.png}%
+\includegraphics<2>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_2.png}
+
+\vspace{8pt}
+\takeaway{Stocker, transporter, retransmettre : un nœud garde le \emph{bundle} jusqu'au prochain contact.}\\[4pt]
+{\small\color{inkdim} Architecture DTN : RFC 4838 \quad$\cdot$\quad Bundle Protocol v7 : RFC 9171}
+\vfill
+
+\note{Les réseaux tolérants aux délais, définis par l'architecture de la RFC 4838. Le protocole standard est Bundle Protocol, version 7, RFC 9171 : l'unité de données est le bundle. Prenons un rover sur Mars qui veut joindre un opérateur sur Terre. Il transmet son bundle à un orbiteur au moment d'un contact. [clic] L'orbiteur n'a pas encore de lien vers la Terre : il garde le bundle en stockage, et le transporte avec lui sur son orbite.}
+\end{frame}
+
+% ============================== DTN (GIF frames 3-4) ==============================
+\begin{frame}{Delay/Disruption-Tolerant Networking (DTN)}
+\framesubtitle{un protocole overlay}
+
+\vfill
+\centering
+\includegraphics<1>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_3.png}%
+\includegraphics<2>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_4.png}
+
+\vspace{8pt}
+\takeaway{Longs délais, longues interruptions : pas besoin d'un chemin de bout en bout permanent.}\\[4pt]
+{\small\color{inkdim} BP est un \textbf{protocole overlay} : il se pose sur n'importe quel transport, via un CLA.}
+\vfill
+
+\note{Au contact suivant, l'orbiteur retransmet le bundle vers la station sol, malgré la distance interplanétaire et le long délai. [clic] La station le remet ensuite à l'opérateur, cette fois sur l'Internet classique. Regardez la pile de la station : BP se pose aussi bien au-dessus d'un lien spatial que d'une pile TCP/IP. C'est un protocole overlay : il s'adapte à n'importe quel transport, grâce à un adaptateur de couche de convergence, un CLA.}
+\end{frame}
+
+% ============================== WHY BP ==============================
+\begin{frame}{Pourquoi BP ?}
+
+\vfill
+\centering{\Large\color{ink}\bfseries Un protocole d'avenir.}
+
+\vspace{6pt}
+\begin{columns}[T]
+\begin{column}{0.24\textwidth}
+\begin{smallcard}{std}\centering
+{\bfseries IETF}\\[3pt]
+{\footnotesize\color{inkdim} standardisation : RFC 4838 (DTN), RFC 9171 (BPv7)}
+\end{smallcard}
+\end{column}
+\begin{column}{0.24\textwidth}
+\begin{smallcard}{std}\centering
+{\bfseries CCSDS}\\[3pt]
+{\footnotesize\color{inkdim} standards spatiaux, dont le \emph{Schedule-Aware Bundle Routing}}
+\end{smallcard}
+\end{column}
+\begin{column}{0.24\textwidth}
+\begin{smallcard}{std}\centering
+{\bfseries IOAG}\\[3pt]
+{\footnotesize\color{inkdim} recommandations inter-agences, réseaux lunaires et solaires}
+\end{smallcard}
+\end{column}
+\begin{column}{0.24\textwidth}
+\begin{smallcard}{std}\centering
+{\bfseries IPNSIG}\\[3pt]
+{\footnotesize\color{inkdim} porte la vision du \emph{Solar System Internet}}
+\end{smallcard}
+\end{column}
+\end{columns}
+
+\vspace{10pt}
+{\footnotesize\color{inkdim} Intérêts industriels et académiques}\\[3pt]
+\chipsm{NASA LCRNS} \chipsm{ESA Moonlight} \chipsm{NASA–ESA LunaNet}\\[3pt]
+\chipsm{D3TN} \chipsm{Aalyria} \chipsm{Spatiam} \chipsm{Tolero}
+\vfill
+
+\note{Pourquoi Bundle Protocol plutôt qu'autre chose ? Parce que c'est un protocole d'avenir : il est prévu pour les futures missions d'exploration spatiale, et pour le futur Solar System Internet. Les efforts de standardisation convergent. L'IETF, l'organe de standardisation d'Internet, a publié l'architecture DTN dans la RFC 4838 et BP version 7 dans la RFC 9171. Le CCSDS produit les standards pour le spatial, notamment le Schedule-Aware Bundle Routing. L'IOAG publie des recommandations inter-agences pour les réseaux lunaires et solaires : c'est du long terme, des rapports de référence pour les futures missions. Et l'IPNSIG porte la vision du Solar System Internet. L'intérêt est à la fois académique et industriel : on retrouve BP au cœur des architectures lunaires --- LCRNS à la NASA, Moonlight à l'ESA, LunaNet porté par les deux --- et chez des industriels comme D3TN, Aalyria, Spatiam ou Tolero.}
+\end{frame}
+
+% ============================== OVERVIEW (domaines d'intérêt) ==============================
+\begin{frame}{Domaines d'intérêt}
 
 \vfill
 \begin{columns}[T]
@@ -188,111 +294,18 @@
 \vspace{4pt}
 \begin{columns}[T]
 \begin{column}{0.49\textwidth}
-\ovcard{Ambitions}{%
-\laterled Un vrai réseau DTN pour les opérations\\
-\laterled BP + routage sur microcontrôleur\\
-\laterled Un laboratoire pour les chercheurs}
-\end{column}
-\begin{column}{0.49\textwidth}
-\ovcard{Partenaires}{%
+\ovcard{Partenaires et interlocuteurs}{%
 \laterled CSUM\\
 \laterled Étudiants de Montpellier et d'ailleurs\\
 \laterled INRIA, D3TN, Université de Bologne \dots}
 \end{column}
-\end{columns}
-
-\note{CSPCL et Charon font partie d'un projet plus large, VISTA. Côté outillage : le protocole, avec Bundle Protocol et CSPCL ; le routage, avec A-SABR ; et l'interopérabilité, avec Charon. Côté modèles : l'optimisation du routage et l'internetworking. Nos ambitions : un vrai réseau DTN pour les opérations, le protocole et le routage sur microcontrôleur, et un laboratoire pour les chercheurs. Et tout cela avec nos partenaires : le CSUM, les étudiants de Montpellier et d'ailleurs, l'INRIA, D3TN et l'Université de Bologne. Aujourd'hui, je parle des briques d'outillage.}
-\end{frame}
-
-% ============================== CSUM (building + control room) ==============================
-\begin{frame}{Le CSUM}
-
-\vfill
-\centering
-\begin{columns}[c]
-\begin{column}{0.42\textwidth}\centering
-\photo{\linewidth}{0.55\textheight}{csum_building.png}
-\end{column}
-\begin{column}{0.54\textwidth}\centering
-\photo{\linewidth}{0.55\textheight}{control_room.png}
+\begin{column}{0.49\textwidth}
+\ovcard{Ambitions}{%
+{\color{inkfaint}\dots}}
 \end{column}
 \end{columns}
 
-\vspace{12pt}
-\chip{Montpellier, France}\\[8pt]
-\takeaway{Centre Spatial Universitaire de Montpellier: de vraies opérations en vol,\\ une mission CubeSat 12U en préparation.}
-\vfill
-
-\note{Ce travail existe grâce à un vrai client : le CSUM, le Centre Spatial Universitaire de Montpellier. À droite, sa salle de contrôle : de vraies opérations, menées par une petite équipe, sur une pile qu'elle connaît par cœur. Le CSUM prépare une mission CubeSat 12U et, comme la plupart des équipes CubeSat universitaires, il fonctionne avec un petit budget. On ne remplace pas une telle pile du jour au lendemain : c'est la réalité que toute transition vers le DTN doit respecter.}
-\end{frame}
-
-% ============================== DTN (GIF frames 1-2) ==============================
-\begin{frame}{Les DTN}
-
-\vfill
-\centering
-\includegraphics<1>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_1.png}%
-\includegraphics<2>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_2.png}
-
-\vspace{8pt}
-\takeaway{Stocker, transporter, retransmettre : un nœud garde le \emph{bundle} jusqu'au prochain contact.}\\[4pt]
-{\small\color{inkdim} Architecture DTN : RFC 4838 \quad$\cdot$\quad Bundle Protocol v7 : RFC 9171}
-\vfill
-
-\note{Les réseaux tolérants aux délais, définis par l'architecture de la RFC 4838. Le protocole standard est Bundle Protocol, version 7, RFC 9171 : l'unité de données est le bundle. Prenons un rover sur Mars qui veut joindre un opérateur sur Terre. Il transmet son bundle à un orbiteur au moment d'un contact. [clic] L'orbiteur n'a pas encore de lien vers la Terre : il garde le bundle en stockage, et le transporte avec lui sur son orbite.}
-\end{frame}
-
-% ============================== DTN (GIF frames 3-4) ==============================
-\begin{frame}{Les DTN --- un protocole overlay}
-
-\vfill
-\centering
-\includegraphics<1>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_3.png}%
-\includegraphics<2>[width=\linewidth,height=0.6\textheight,keepaspectratio]{dtn_gif_4.png}
-
-\vspace{8pt}
-\takeaway{Longs délais, longues interruptions : pas besoin d'un chemin de bout en bout permanent.}\\[4pt]
-{\small\color{inkdim} BP est un \textbf{protocole overlay} : il se pose sur n'importe quel transport, via un CLA.}
-\vfill
-
-\note{Au contact suivant, l'orbiteur retransmet le bundle vers la station sol, malgré la distance interplanétaire et le long délai. [clic] La station le remet ensuite à l'opérateur, cette fois sur l'Internet classique. Regardez la pile de la station : BP se pose aussi bien au-dessus d'un lien spatial que d'une pile TCP/IP. C'est un protocole overlay : il s'adapte à n'importe quel transport, grâce à un adaptateur de couche de convergence, un CLA.}
-\end{frame}
-
-% ============================== WHY BP ==============================
-\begin{frame}{Pourquoi BP ?}
-
-\vfill
-\centering{\Large\color{ink}\bfseries Un protocole d'avenir.}\\[6pt]
-\takeaway{Conçu pour les futures missions d'exploration spatiale\\ et pour le futur \emph{Solar System Internet}.}
-
-\vspace{14pt}
-\begin{columns}[T]
-\begin{column}{0.32\textwidth}
-\begin{smallcard}{std}\centering
-{\bfseries IETF}\\[3pt]
-{\small\color{inkdim} standardise Bundle Protocol v7 (RFC 9171)}
-\end{smallcard}
-\end{column}
-\begin{column}{0.32\textwidth}
-\begin{smallcard}{std}\centering
-{\bfseries CCSDS}\\[3pt]
-{\small\color{inkdim} normalise BP pour les communications spatiales}
-\end{smallcard}
-\end{column}
-\begin{column}{0.32\textwidth}
-\begin{smallcard}{std}\centering
-{\bfseries IOAG}\\[3pt]
-{\small\color{inkdim} en fait la base du \emph{Solar System Internet}}
-\end{smallcard}
-\end{column}
-\end{columns}
-
-\vspace{12pt}
-{\small\color{inkdim} Déjà au cœur des futures architectures}\\[6pt]
-\chip{NASA LCRNS} \chip{ESA Moonlight} \chip{NASA–ESA LunaNet}
-\vfill
-
-\note{Pourquoi Bundle Protocol plutôt qu'autre chose ? Parce que c'est un protocole d'avenir : il est prévu pour les futures missions d'exploration spatiale, et pour le futur Solar System Internet. Les efforts de standardisation convergent : l'IETF a standardisé BP version 7 avec la RFC 9171, le CCSDS le normalise pour les communications spatiales, et l'IOAG en fait la base du Solar System Internet. On le retrouve déjà au cœur des futures architectures lunaires : LCRNS à la NASA, Moonlight à l'ESA, et LunaNet, porté par la NASA et l'ESA.}
+\note{Voici nos domaines d'intérêt autour de BP, regroupés dans le projet VISTA, dont CSPCL et Charon font partie. Côté outillage : le protocole, avec Bundle Protocol et CSPCL ; le routage, avec A-SABR ; et l'interopérabilité, avec Charon. Côté modèles : l'optimisation du routage et l'internetworking. Tout cela avec nos partenaires et interlocuteurs : le CSUM, les étudiants de Montpellier et d'ailleurs, l'INRIA, D3TN et l'Université de Bologne. Quant à nos ambitions\dots\ j'y reviendrai à la fin. Aujourd'hui, je parle des briques d'outillage.}
 \end{frame}
 
 % ============================== CHALLENGE 1 ==============================
@@ -303,19 +316,19 @@
 
 \vspace{10pt}
 \begin{columns}[T]
-\begin{column}{0.32\textwidth}
+\begin{column}{0.36\textwidth}
 \begin{smallcard}{chal}\centering
-{\bfseries CSP, éprouvé en vol}\\[3pt]
+{\bfseries CSP, testé et validé en vol}\\[3pt]
 {\small\color{inkdim} réseau interne du satellite, très répandu chez les CubeSats --- mais pas DTN}
 \end{smallcard}
 \end{column}
-\begin{column}{0.32\textwidth}
+\begin{column}{0.30\textwidth}
 \begin{smallcard}{chal}\centering
 {\bfseries BP, séduisant\dots}\\[3pt]
 {\small\color{inkdim} \dots\ mais changer de pile est un risque, et toutes les applications ne parlent pas BP}
 \end{smallcard}
 \end{column}
-\begin{column}{0.32\textwidth}
+\begin{column}{0.30\textwidth}
 \begin{smallcard}{chal}\centering
 {\bfseries Les petits acteurs}\\[3pt]
 {\small\color{inkdim} ne sont pas prêts à faire le saut sans en avoir évalué les gains}
@@ -329,7 +342,7 @@
 \end{cardbox}
 \vfill
 
-\note{Voici le challenge: Les opérateurs de CubeSats utilisent CSP, le CubeSat Space Protocol : il a fait ses preuves en vol comme réseau interne du satellite, et il est largement utilisé dans la communauté CubeSat. Mais ce n'est pas un protocole DTN. Bundle Protocol est séduisant\dots\ mais passer de CSP à BP, c'est changer toute la pile : un risque que les petits acteurs ne sont pas prêts à prendre avant d'en avoir évalué les gains. Et au-delà du risque sur le protocole, toutes les applications ne parlent pas BP. Notre levier, c'est la nature overlay de BP : on peut le faire tourner au-dessus de CSP, et proposer aux opérateurs de tester la tolérance aux délais sans changer leur pile.}
+\note{Voici le challenge: Les opérateurs de CubeSats utilisent CSP, le CubeSat Space Protocol : il a été testé et validé en vol comme réseau interne du satellite, et il est largement utilisé dans la communauté CubeSat. Mais ce n'est pas un protocole DTN. Bundle Protocol est séduisant\dots\ mais passer de CSP à BP, c'est changer toute la pile : un risque que les petits acteurs ne sont pas prêts à prendre avant d'en avoir évalué les gains. Et au-delà du risque sur le protocole, toutes les applications ne parlent pas BP. Notre levier, c'est la nature overlay de BP : on peut le faire tourner au-dessus de CSP, et proposer aux opérateurs de tester la tolérance aux délais sans changer leur pile.}
 \end{frame}
 
 % ============================== CSPCL: BRICK IN THE STACK ==============================
@@ -394,8 +407,8 @@
 \begin{column}{0.54\textwidth}
 \begin{itemize}
 \item \textbf{RDP} : connexions CSP acquittées.
-\item \textbf{SFP} : fragmentation, car un bundle dépasse presque toujours la MTU CSP.
-\item \textbf{SocketCAN} : le vrai bus CAN, sans matériel en plus.
+\item \textbf{SFP} : fragmentation --- la taille maximale d'un bundle n'est plus limitée par celle d'un paquet CSP.
+\item \textbf{SocketCAN} : accès au bus CAN avec les sockets Berkeley.
 \end{itemize}
 
 \vspace{8pt}
@@ -405,7 +418,7 @@
 \end{columns}
 \vfill
 
-\note{Premier niveau : dialoguer avec CSP. Le rôle d'un adaptateur de couche de convergence est de faire correspondre la transmission de bundles à un transport sous-jacent, comme TCPCL le fait pour TCP. CSPCL s'appuie sur deux fonctionnalités de CSP : RDP pour les connexions acquittées, et SFP pour la fragmentation, car un bundle est presque toujours plus gros que la MTU d'un paquet CSP. Et il utilise le bus CAN via SocketCAN : les bundles empruntent exactement le même câble que le reste du satellite. Et comme BP est un protocole overlay, on garde TCPCL là où le réseau DTN recouvre Internet : c'est exactement ce qu'on a vu avec la station sol tout à l'heure.}
+\note{Premier niveau : dialoguer avec CSP. Le rôle d'un adaptateur de couche de convergence est de faire correspondre la transmission de bundles à un transport sous-jacent, comme TCPCL le fait pour TCP. CSPCL s'appuie sur deux fonctionnalités de CSP : RDP pour les connexions acquittées, et SFP pour la fragmentation : sans elle, la taille maximale d'un bundle serait celle d'un paquet CSP. Et il accède au bus CAN via SocketCAN, c'est-à-dire avec les sockets Berkeley classiques : les bundles empruntent exactement le même câble que le reste du satellite. Et comme BP est un protocole overlay, on garde TCPCL là où le réseau DTN recouvre Internet : c'est exactement ce qu'on a vu avec la station sol tout à l'heure.}
 \end{frame}
 
 % ============================== LEVEL 2: RELIABILITY ==============================
@@ -465,12 +478,12 @@
 \draw[panel,line width=1.4pt] (0,0.5) rectangle (4.3,1.9); \node[lbli] at (2.15,1.2) {CSP / BUS CAN};
 \end{tikzpicture}}
 
-\vspace{10pt}
+\vspace{6pt}
 \centering{\Large\color{ink}\bfseries Comment les applications existantes\\ peuvent-elles devenir tolérantes aux délais ?}\\[8pt]
-\takeaway{Elles volent déjà, sont qualifiées, et parlent CSP : pas question de les réécrire.}
+\takeaway{Objectif : la \textbf{continuité de service}. Elles volent déjà, sont qualifiées,\\ et parlent CSP : pas question de les réécrire.}
 \vfill
 
-\note{BP circule maintenant sur CSP. Mais il reste un second challenge : les applications. Elles volent déjà, elles sont qualifiées, et elles parlent du CSP pur. Comment peuvent-elles profiter de la tolérance aux délais, sans être réécrites pour parler Bundle Protocol ?}
+\note{BP circule maintenant sur CSP. Mais il reste un second challenge : les applications. Elles volent déjà, elles sont qualifiées, et elles parlent du CSP pur. Comment peuvent-elles profiter de la tolérance aux délais, et garantir la continuité de service malgré les coupures, sans être réécrites pour parler Bundle Protocol ?}
 \end{frame}
 
 % ============================== CHARON (merged) ==============================
@@ -553,9 +566,10 @@
 \begin{frame}{Adaptive library for Schedule-Aware Bundle Routing (A-SABR)}
 
 \vfill
-\centering{\Large\color{ink}\bfseries Une bibliothèque pour instancier\\ différentes stratégies de routage.}
+\centering{\Large\color{ink}\bfseries Un framework, développé à Montpellier,\\ pour instancier différentes stratégies de routage.}\\[6pt]
+\takeaway{De nouveaux concepts, proposés en réponse aux difficultés rencontrées\\ avec CGR (\emph{Contact Graph Routing}).}
 
-\vspace{14pt}
+\vspace{10pt}
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
 \begin{itemize}
@@ -572,11 +586,11 @@
 \end{column}
 \end{columns}
 
-\vspace{12pt}
+\vspace{10pt}
 \takeaway{Pas de qualité de service réactive en DTN : la gestion des ressources passe\\ par l'optimisation du routage.}
 \vfill
 
-\note{Le routage est assuré par A-SABR, Adaptive library for Schedule-Aware Bundle Routing : une bibliothèque qui permet d'instancier différentes stratégies de routage. Elle est déjà utilisée par d'autres équipes, et elle porte beaucoup de travaux sur la gestion des ressources. En DTN, on ne peut pas faire de qualité de service de manière réactive : il faut l'anticiper, et donc optimiser le routage. A-SABR gère le volume, les ressources des nœuds, l'internetworking, le support microcontrôleur, et propose plusieurs backends pour de nombreux algorithmes.}
+\note{Le routage est assuré par A-SABR, Adaptive library for Schedule-Aware Bundle Routing : un framework développé ici, à Montpellier, qui permet d'instancier différentes stratégies de routage. Il propose de nouveaux concepts, nés des difficultés que nous avons rencontrées avec CGR, le Contact Graph Routing. Il est déjà utilisé par d'autres équipes, et elle porte beaucoup de travaux sur la gestion des ressources. En DTN, on ne peut pas faire de qualité de service de manière réactive : il faut l'anticiper, et donc optimiser le routage. A-SABR gère le volume, les ressources des nœuds, l'internetworking, le support microcontrôleur, et propose plusieurs backends pour de nombreux algorithmes.}
 \end{frame}
 
 % ============================== TESTBED ==============================
@@ -619,32 +633,36 @@
 \begin{frame}{Perspectives}
 
 \vfill
+\begin{smallcard}{mcu}
+{\bfseries Vers les microcontrôleurs}\\[3pt]
+{\footnotesize\color{inkdim} Le CubeSat visé est de taille conséquente, sous Linux. Un objectif est d'étendre le fonctionnement aux plus petits : A-SABR est déjà compatible, CSPCL et Charon restent à porter, et un BPA microcontrôleur est en vue avec nos partenaires allemands (picoD3TN).}
+\end{smallcard}
+
+\vspace{6pt}
 \begin{columns}[T]
 \begin{column}{0.32\textwidth}
 \begin{smallcard}{fut}\centering
-{\bfseries Un modèle d'optimisation}\\[3pt]
-{\small\color{inkdim} pour obtenir les limites théoriques du routage, et servir de référence aux benchmarks}
+{\bfseries Modèle d'optimisation}\\[3pt]
+{\footnotesize\color{inkdim} pour obtenir les limites théoriques du routage, et servir de référence aux benchmarks}
 \end{smallcard}
 \end{column}
 \begin{column}{0.32\textwidth}
 \begin{smallcard}{fut}\centering
-{\bfseries D3TN cloud-native spatial}\\[3pt]
-{\small\color{inkdim} un PCB dédié pour lancer des expériences conteneurisées tolérantes aux délais}
+{\bfseries D3TN cloud-native}\\[3pt]
+{\footnotesize\color{inkdim} spatial : un PCB dédié pour lancer des expériences conteneurisées tolérantes aux délais}
 \end{smallcard}
 \end{column}
 \begin{column}{0.32\textwidth}
 \begin{smallcard}{fut}\centering
 {\bfseries Un laboratoire volant}\\[3pt]
-{\small\color{inkdim} pour les expériences des chercheurs, DTN ou non}
+{\footnotesize\color{inkdim} pour les expériences des chercheurs, DTN ou non}
 \end{smallcard}
 \end{column}
 \end{columns}
 
-\vspace{16pt}
-\centering\takeaway{CSPCL et Charon ne sont que les premières briques du projet VISTA.}
 \vfill
 
-\note{Et au-delà, le projet VISTA prépare plusieurs choses. Un modèle d'optimisation, pour obtenir les limites théoriques du routage et servir de référence aux benchmarks. Une approche cloud-native spatiale autour de D3TN, avec un PCB dédié qui permettra aux chercheurs de lancer des expériences conteneurisées tolérantes aux délais. Et, à terme, un véritable laboratoire volant, pour des expériences DTN comme non DTN.}
+\note{Et au-delà, voici nos ambitions. D'abord, les microcontrôleurs : aujourd'hui on vise des CubeSats de taille conséquente, capables de faire tourner Linux, mais on aimerait étendre l'approche à des CubeSats plus petits. La partie routage, avec A-SABR, est déjà compatible microcontrôleur ; CSPCL et Charon, en revanche, restent à porter. Et nous travaillons avec nos partenaires en Allemagne pour disposer d'un BPA compatible microcontrôleur, picoD3TN. Ensuite, un modèle d'optimisation, pour obtenir les limites théoriques du routage et servir de référence aux benchmarks. Une approche cloud-native spatiale autour de D3TN, avec un PCB dédié qui permettra aux chercheurs de lancer des expériences conteneurisées tolérantes aux délais. Et, à terme, un véritable laboratoire volant, pour des expériences DTN comme non DTN.}
 \end{frame}
 
 % ============================== ACKNOWLEDGEMENTS ==============================
